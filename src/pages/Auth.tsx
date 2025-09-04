@@ -36,10 +36,10 @@ export default function Auth() {
         const result = await login(username, password);
 
         if (result.success) {
-          toast.success("Login realizado com sucesso! 🎉");
+          toast.success("Login successful! 🎉");
           navigate("/");
         } else {
-          toast.error(result.error || "Erro no login");
+          toast.error(result.error || "Login failed");
         }
       } else {
         if (role === 'student' && !selectedAvatar) {
@@ -51,15 +51,15 @@ export default function Auth() {
         const result = await register(username, role, password, selectedAvatar);
 
         if (result.success) {
-          toast.success("Conta criada com sucesso! 🎉");
+          toast.success("Account created successfully! 🎉");
           navigate("/");
         } else {
-          toast.error(result.error || "Erro no cadastro");
+          toast.error(result.error || "Sign-up failed");
         }
       }
     } catch (error: any) {
-      console.error('Erro de autenticação:', error);
-      toast.error("Erro no servidor");
+      console.error('Authentication error:', error);
+      toast.error("Server error");
     } finally {
       setLoading(false);
     }
@@ -71,10 +71,10 @@ export default function Auth() {
     setTimeout(() => {
       register(username, role, password, avatarUrl).then(result => {
         if (result.success) {
-          toast.success("Conta criada com sucesso! 🎉");
+          toast.success("Account created successfully! 🎉");
           navigate("/");
         } else {
-          toast.error(result.error || "Erro no cadastro");
+          toast.error(result.error || "Sign-up failed");
         }
       });
     }, 500);
@@ -83,7 +83,7 @@ export default function Auth() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
 
-      {/* Botão de tema no canto superior direito */}
+      {/* Theme button */}
       <div className="absolute top-8 right-8 z-10">
         <ThemeToggle />
       </div>
@@ -92,19 +92,17 @@ export default function Auth() {
 
         {/* Header */}
         <div className="text-center space-y-4">
-          <div className="flex justify-center">
-          </div>
+          <div className="flex justify-center"></div>
 
           <div className="flex-col items-center gap-4">
-            {/* Adicionado 'mb-2' para espaçamento entre o título e o parágrafo */}
             <h1 className="text-6xl font-bold text-foreground mb-4">Help Buddy</h1>
             <p className="text-2xl text-muted-foreground">
-              Conectando alunos, pais e educadores
+              Connecting students, parents and educators
             </p>
           </div>
         </div>
 
-        {/* Seleção de Avatar para Estudantes */}
+        {/* Avatar selection for students */}
         {showAvatarSelection ? (
           <ThriveSprite onAvatarSelect={handleAvatarSelect} />
         ) : (
@@ -112,7 +110,7 @@ export default function Auth() {
           <Card className="shadow-soft">
             <CardHeader>
               <CardTitle className="text-center text-3xl">
-                {isLogin ? "Fazer Login" : "Criar Conta"}
+                {isLogin ? "Login" : "Sign Up"}
               </CardTitle>
             </CardHeader>
 
@@ -126,9 +124,7 @@ export default function Auth() {
                     className="flex items-center gap-2"
                   >
                     <LogIn className="w-4 h-4" />
-
                     <p className="text-xl">Login</p>
-
                   </TabsTrigger>
                   <TabsTrigger
                     value="signup"
@@ -136,34 +132,33 @@ export default function Auth() {
                     className="flex items-center gap-2"
                   >
                     <UserPlus className="w-4 h-4" />
-                    <p className="text-xl">Cadastro</p>
-
+                    <p className="text-xl">Sign Up</p>
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="login" className="space-y-4 mt-6">
                   <form onSubmit={handleAuth} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="username" className="text-xl">Nome de usuário</Label>
+                      <Label htmlFor="username" className="text-xl">Username</Label>
                       <Input
                         id="username"
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Seu nome de usuário"
+                        placeholder="Your username"
                         className="placeholder:text-base"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="password" className="text-xl">Senha</Label>
+                      <Label htmlFor="password" className="text-xl">Password</Label>
                       <div className="relative">
                         <Input
                           id="password"
                           type={showPassword ? "text" : "password"}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          placeholder="Sua senha"
+                          placeholder="Your password"
                           className="placeholder:text-base"
                           required
                         />
@@ -183,7 +178,7 @@ export default function Auth() {
                       className="w-full text-xl"
                       disabled={loading}
                     >
-                      {loading ? "Entrando..." : "Entrar"}
+                      {loading ? "Signing in..." : "Sign In"}
                     </Button>
                   </form>
                 </TabsContent>
@@ -191,25 +186,25 @@ export default function Auth() {
                 <TabsContent value="signup" className="space-y-4 mt-6">
                   <form onSubmit={handleAuth} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signup-username">Nome de usuário</Label>
+                      <Label htmlFor="signup-username">Username</Label>
                       <Input
                         id="signup-username"
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Escolha um nome único"
+                        placeholder="Choose a unique name"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password">Senha</Label>
+                      <Label htmlFor="signup-password">Password</Label>
                       <div className="relative">
                         <Input
                           id="signup-password"
                           type={showPassword ? "text" : "password"}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          placeholder="Crie uma senha segura"
+                          placeholder="Create a secure password"
                           required
                         />
                         <Button
@@ -224,7 +219,7 @@ export default function Auth() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="role">Você é:</Label>
+                      <Label htmlFor="role">You are:</Label>
                       <Select value={role} onValueChange={(value: UserRole) => setRole(value)}>
                         <SelectTrigger>
                           <SelectValue />
@@ -233,19 +228,19 @@ export default function Auth() {
                           <SelectItem value="student">
                             <div className="flex items-center gap-2">
                               <User className="w-4 h-4" />
-                              Aluno
+                              Student
                             </div>
                           </SelectItem>
                           <SelectItem value="parent">
                             <div className="flex items-center gap-2">
                               <Heart className="w-4 h-4" />
-                              Pai/Mãe
+                              Parent
                             </div>
                           </SelectItem>
                           <SelectItem value="educator">
                             <div className="flex items-center gap-2">
                               <User className="w-4 h-4" />
-                              Educador
+                              Educator
                             </div>
                           </SelectItem>
                         </SelectContent>
@@ -256,7 +251,7 @@ export default function Auth() {
                       className="w-full"
                       disabled={loading}
                     >
-                      {loading ? "Criando conta..." : (role === 'student' ? "Escolher ThriveSprite" : "Criar conta")}
+                      {loading ? "Creating account..." : (role === 'student' ? "Choose ThriveSprite" : "Create Account")}
                     </Button>
                   </form>
                 </TabsContent>
@@ -266,7 +261,7 @@ export default function Auth() {
         )}
 
         <p className="text-center text-xs text-muted-foreground">
-          Sistema seguro com autenticação por senha
+          Secure system with password authentication
         </p>
       </div>
     </div>
